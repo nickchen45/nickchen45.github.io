@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,Material Design," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="IntroductionToolbar 是 Google 在Android 5.0 推出的一個 Material Design 的控件，Toolbar 的靈活性在於並不只限於只能放在上方導航欄的位置上，同時也能嵌套在任意的 View 結構中，當然你可以在 Activity 中，呼叫  setActionBar() 方法，把 Toolbar 指定為上方導航欄使用。">
+<meta name="keywords" content="Android,Material Design">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[Material Design] Android Toolbar(一)">
+<meta property="og:url" content="http://nickcode4fun.net/2017/11/19/MaterialDesign-Android-Toolbar(一)-Create-Toolbar/index.html">
+<meta property="og:site_name" content="代碼玩家 Nick&#39;s Blog">
+<meta property="og:description" content="IntroductionToolbar 是 Google 在Android 5.0 推出的一個 Material Design 的控件，Toolbar 的靈活性在於並不只限於只能放在上方導航欄的位置上，同時也能嵌套在任意的 View 結構中，當然你可以在 Activity 中，呼叫  setActionBar() 方法，把 Toolbar 指定為上方導航欄使用。">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:image" content="http://nickcode4fun.net/2017/11/19/MaterialDesign-Android-Toolbar(一)-Create-Toolbar/toolbar01.png">
+<meta property="og:image" content="http://nickcode4fun.net/2017/11/19/MaterialDesign-Android-Toolbar(一)-Create-Toolbar/toolbar02.png">
+<meta property="og:image" content="http://nickcode4fun.net/2017/11/19/MaterialDesign-Android-Toolbar(一)-Create-Toolbar/toolbar03.png">
+<meta property="og:updated_time" content="2018-10-25T03:28:50.255Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[Material Design] Android Toolbar(一)">
+<meta name="twitter:description" content="IntroductionToolbar 是 Google 在Android 5.0 推出的一個 Material Design 的控件，Toolbar 的靈活性在於並不只限於只能放在上方導航欄的位置上，同時也能嵌套在任意的 View 結構中，當然你可以在 Activity 中，呼叫  setActionBar() 方法，把 Toolbar 指定為上方導航欄使用。">
+<meta name="twitter:image" content="http://nickcode4fun.net/2017/11/19/MaterialDesign-Android-Toolbar(一)-Create-Toolbar/toolbar01.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://nickcode4fun.net/2017/11/19/MaterialDesign-Android-Toolbar(一)-Create-Toolbar/"/>
+
+
+
+
+
+  <title>[Material Design] Android Toolbar(一) | 代碼玩家 Nick's Blog</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-110158879-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">代碼玩家 Nick's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://nickcode4fun.net/2017/11/19/MaterialDesign-Android-Toolbar(一)-Create-Toolbar/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Nick Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="代碼玩家 Nick's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[Material Design] Android Toolbar(一)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-11-19T21:13:47+08:00">
+                2017-11-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/19/MaterialDesign-Android-Toolbar(一)-Create-Toolbar/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/19/MaterialDesign-Android-Toolbar(一)-Create-Toolbar/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 本文總閱讀量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Toolbar 是 Google 在Android 5.0 推出的一個 Material Design 的控件，Toolbar 的靈活性在於並不只限於只能放在上方導航欄的位置上，同時也能嵌套在任意的 View 結構中，當然你可以在 Activity 中，呼叫  setActionBar() 方法，把 Toolbar 指定為上方導航欄使用。<br><a id="more"></a><br>Toolbar 還開放讓開發者，自訂：</p>
+<p>1.支持自訂按鈕<br>2.支持設置品牌Logo<br>3.支持設置標題和子標題<br>4.支持添加一個或多個自定義的控件<br>5.支持設置 Action Menu</p>
+<h2 id="Create-Toolbar"><a href="#Create-Toolbar" class="headerlink" title="Create Toolbar"></a>Create Toolbar</h2><p>1.進入 res -&gt; values -&gt; style ，修改App的樣式為 NoActionBar</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;resources&gt;</span><br><span class="line">	...</span><br><span class="line">	 &lt;style name=<span class="string">"AppTheme"</span> parent=<span class="string">"Theme.AppCompat.Light.NoActionBar"</span>&gt;</span><br><span class="line">	        &lt;item name=<span class="string">"colorPrimary"</span>&gt;@color/colorPrimary&lt;/item&gt;</span><br><span class="line">	        &lt;item name=<span class="string">"colorPrimaryDark"</span>&gt;@color/colorPrimaryDark&lt;/item&gt;</span><br><span class="line">	        &lt;item name=<span class="string">"colorAccent"</span>&gt;@color/colorAccent&lt;/item&gt;</span><br><span class="line">	 &lt;/style&gt;</span><br><span class="line">&lt;/resources&gt;</span><br></pre></td></tr></table></figure>
+<p>2.在 Activity 的 Layout XML 引用 support.v7 包下的 Toolbar</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</span><br><span class="line"> &lt;RelativeLayout</span><br><span class="line"> 	... &gt;</span><br><span class="line"> 	...</span><br><span class="line">	 &lt;android.support.v7.widget.Toolbar</span><br><span class="line">	 	.. /&gt;</span><br><span class="line"></span><br><span class="line">&lt;/RelativeLayout&gt;</span><br></pre></td></tr></table></figure>
+<p>3.如果我們讓 Toolbar 同系統預設的 Action bar 高，寬就使用 match_parent 符合螢幕就好，顏色也是同系統預設 ActionBar 的顏色</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;android.support.v7.widget.Toolbar</span><br><span class="line">	android:id=<span class="string">"@+id/toolbar"</span></span><br><span class="line">	android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">	android:layout_height=<span class="string">"?attr/actionBarSize"</span></span><br><span class="line">	android:background=<span class="string">"?attr/colorPrimary"</span>/&gt;</span><br></pre></td></tr></table></figure>
+<p>4.XML 完成後，我們回到 Activity ，呼叫 Activity 中的 setActionBar() 方法，把 Action bar 換成自己的 Toolbar </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class MainActivity extends AppCompatActivity &#123;</span><br><span class="line">	...</span><br><span class="line"></span><br><span class="line">	@Override</span><br><span class="line">	protected void onCreate(Bundle saveInstanceState) &#123;</span><br><span class="line">		super.onCreate(saveInstanceState)</span><br><span class="line">		setContentView(R.layout.activity_main);</span><br><span class="line">		...</span><br><span class="line">		setSupportActionBar(toolbar);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Customize-the-Toolbar"><a href="#Customize-the-Toolbar" class="headerlink" title="Customize the Toolbar"></a>Customize the Toolbar</h2><p>接下來我們來客製化自己的 ToolBar 顏色，顏色的來源就從 Google Material 官網選擇<br><a href="https://material.io/guidelines/style/color.html#color-color-palette" target="_blank" rel="noopener">Material Design Color</a><br>或是參考熱心網友整理成的XML<br><a href="https://gist.github.com/daniellevass/b0b8cfa773488e138037" target="_blank" rel="noopener">Android Material Design Colours</a></p>
+<p>1.進入res -&gt; values -&gt; colors ，改變 color primary 的顏色，就可以換掉我們的 Toolbar 顏色了，通常我們會連 color promary dark 一起換掉。<br>(1) color primary 代表 Toolbar 顏色，通常我們會選擇數值 400 ~ 600間<br>(2) color primary 代表 Status Bar (Action Bar 上面顯示電池電量那一欄) 顏色，通常我們會選擇顏色深一點 數值約 700 ~ 900間<br>我們是選擇 Red-500/700<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;resources&gt;</span><br><span class="line">	...</span><br><span class="line">	&lt;item name=<span class="string">"colorPrimary"</span>&gt;<span class="comment">#F44336&lt;/item&gt;</span></span><br><span class="line">	&lt;item name=<span class="string">"colorPrimaryDark"</span>&gt;<span class="comment">#D32F2F&lt;/item&gt;</span></span><br><span class="line">	&lt;item name=<span class="string">"colorAccent"</span>&gt;<span class="comment">#D32F2F&lt;/item&gt;</span></span><br><span class="line">&lt;/resources&gt;</span><br></pre></td></tr></table></figure></p>
+<p>完成到了這邊可以看到預覽效果<br><img src="toolbar01.png" width="50%" height="50%" align="center/"></p>
+<p>這邊你會想說，ToolBar Label 怎麼是黑色的，我想要換成白色該怎麼辦?!<br>別擔心，只要把 ToolBar Theme 換成 Dark ActionBar就好，此 Theme 的文字顏色是白色</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;android.support.v7.widget.Toolbar</span><br><span class="line">   android:id=<span class="string">"@+id/toolbar</span></span><br><span class="line"><span class="string">   android:layout_width="</span>match_parent<span class="string">"</span></span><br><span class="line"><span class="string">   android:layout_height="</span>?attr/actionBarSize<span class="string">"</span></span><br><span class="line"><span class="string">   android:background="</span>?attr/colorPrimary<span class="string">"</span></span><br><span class="line"><span class="string">   app:theme="</span>@style/ThemeOverlay.AppCompat.Dark.ActionBar<span class="string">"/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>顯示出來的效果如下：<br><img src="toolbar02.png" width="50%" height="50%" align="center/"></p>
+<p>或許眼尖的你會發現，有些手機在螢幕下方有一排 Navigation Bar，如果我們有需求要改變顏色怎麼辦!?<br>只要在 res -&gt; values -&gt; style 找到 AppTheme 中更改顏色就好，我們也把它設定成跟 Status Bar 顏色相同</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;resources&gt;</span><br><span class="line">	...</span><br><span class="line">	&lt;style name=<span class="string">"AppTheme"</span> parent=<span class="string">"Theme.AppCompat.Light.NoActionBar"</span>&gt;</span><br><span class="line">		&lt;item name=<span class="string">"colorPrimary"</span>&gt;@color/colorPrimary&lt;/item&gt;</span><br><span class="line">		&lt;item name=<span class="string">"colorPrimaryDark"</span>&gt;@color/colorPrimaryDark&lt;/item&gt;</span><br><span class="line">		&lt;item name=<span class="string">"colorAccent"</span>&gt;@color/colorAccent&lt;/item&gt;</span><br><span class="line">		&lt;item name=<span class="string">"android:navigationBarColor"</span>&gt;@color/colorPrimaryDark&lt;/item&gt;</span><br><span class="line">	 &lt;/style&gt;</span><br><span class="line">&lt;/resources&gt;</span><br></pre></td></tr></table></figure>
+<p>顯示出來的效果如下：<br><img src="toolbar03.png" width="50%" height="50%" align="center/"></p>
+<p>參考網站：<br><a href="https://developer.android.com/reference/android/support/v7/widget/Toolbar.html" target="_blank" rel="noopener">Android ToolBar</a><br><a href="https://material.io/guidelines/" target="_blank" rel="noopener">Material Design</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Material-Design/" rel="tag"># Material Design</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/30/Android-DataBinding:UnitTest，在Gradle中相應的配置/" rel="next" title="[Android] DataBinding/UnitTest，在Gradle中相應的配置">
+                <i class="fa fa-chevron-left"></i> [Android] DataBinding/UnitTest，在Gradle中相應的配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/24/MaterialDesign-Android-Toolbar(二)-Pop-up-Menu/" rel="prev" title="[Material Design] Android Toolbar(二) - Pop-up Menu">
+                [Material Design] Android Toolbar(二) - Pop-up Menu <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Nick Chen" />
+            
+              <p class="site-author-name" itemprop="name">Nick Chen</p>
+              <p class="site-description motion-element" itemprop="description">Coding for fun</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">標籤</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-Toolbar"><span class="nav-number">2.</span> <span class="nav-text">Create Toolbar</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Customize-the-Toolbar"><span class="nav-number">3.</span> <span class="nav-text">Customize the Toolbar</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nick Chen</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.3</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 本站訪客數
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 本站總訪問量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://nickcode4fun.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://nickcode4fun.net/2017/11/19/MaterialDesign-Android-Toolbar(一)-Create-Toolbar/';
+          this.page.identifier = '2017/11/19/MaterialDesign-Android-Toolbar(一)-Create-Toolbar/';
+          this.page.title = '[Material Design] Android Toolbar(一)';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://nickcode4fun.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

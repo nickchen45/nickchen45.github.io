@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,Material Design," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="IntroductionBottom Navigation在Material Design中算是相當重要的一個組件，通常會用在主頁底部的部分">
+<meta name="keywords" content="Android,Material Design">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[MaterialDesign] Android Bottom Navigation">
+<meta property="og:url" content="http://nickcode4fun.net/2018/01/23/MaterialDesign-Android-Bottom-Navigation/index.html">
+<meta property="og:site_name" content="代碼玩家 Nick&#39;s Blog">
+<meta property="og:description" content="IntroductionBottom Navigation在Material Design中算是相當重要的一個組件，通常會用在主頁底部的部分">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:image" content="http://nickcode4fun.net/2018/01/23/MaterialDesign-Android-Bottom-Navigation/bottom_navigation01.png">
+<meta property="og:image" content="http://nickcode4fun.net/2018/01/23/MaterialDesign-Android-Bottom-Navigation/bottom_navigation02.png">
+<meta property="og:image" content="http://nickcode4fun.net/2018/01/23/MaterialDesign-Android-Bottom-Navigation/bottom_navigation03.gif">
+<meta property="og:image" content="http://nickcode4fun.net/2018/01/23/MaterialDesign-Android-Bottom-Navigation/bottom_navigation04.gif">
+<meta property="og:image" content="http://nickcode4fun.net/2018/01/23/MaterialDesign-Android-Bottom-Navigation/bottom_navigation05.gif">
+<meta property="og:updated_time" content="2018-10-25T03:28:50.381Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[MaterialDesign] Android Bottom Navigation">
+<meta name="twitter:description" content="IntroductionBottom Navigation在Material Design中算是相當重要的一個組件，通常會用在主頁底部的部分">
+<meta name="twitter:image" content="http://nickcode4fun.net/2018/01/23/MaterialDesign-Android-Bottom-Navigation/bottom_navigation01.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://nickcode4fun.net/2018/01/23/MaterialDesign-Android-Bottom-Navigation/"/>
+
+
+
+
+
+  <title>[MaterialDesign] Android Bottom Navigation | 代碼玩家 Nick's Blog</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-110158879-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">代碼玩家 Nick's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://nickcode4fun.net/2018/01/23/MaterialDesign-Android-Bottom-Navigation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Nick Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="代碼玩家 Nick's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[MaterialDesign] Android Bottom Navigation</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-01-23T09:41:42+08:00">
+                2018-01-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/01/23/MaterialDesign-Android-Bottom-Navigation/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/01/23/MaterialDesign-Android-Bottom-Navigation/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 本文總閱讀量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p><strong>Bottom Navigation</strong>在<strong>Material Design中</strong>算是相當重要的一個組件，通常會用在主頁底部的部分<a id="more"></a>，在使用<strong>Bottom Design</strong>作為<strong>App</strong>設計上，有點要注意：</p>
+<p>1.<strong>Bottom Navigation</strong>可以使用文字搭配圖示<br>2.通常放置3個<strong>item</strong>，最多不超過5個，如果少於2個<strong>item</strong>，請使用<strong>Tabs</strong>，超過5個，可以使用<strong>Navigation drawers</strong><br>3.選中狀態下的顏色，建議使用<strong>App’s primary color</strong>或是同<strong>Toolbar</strong>的顏色，<br>4.如果<strong>Bottom Navigation</strong>已經有背景顏色，那選中狀態的文字與圖示應使用白色或是黑色<br>5.<strong>Bottom Navigation</strong>上的文字，盡量簡短明暸，以免發生文字斷行、縮小、未顯示的情形</p>
+<p>接下來我們就來實作<strong>Bottom Navigation</strong></p>
+<h2 id="Create-a-Bottom-Navigation"><a href="#Create-a-Bottom-Navigation" class="headerlink" title="Create a Bottom Navigation"></a>Create a Bottom Navigation</h2><p>在<strong>Android Studio</strong>中，也提中快速創建<strong>Bottom Navigation</strong>的模板，不過我們本篇會選用<strong>Empty Activity</strong><br><img src="bottom_navigation01.png" width="100%" height="100%" align="center/"></p>
+<p>1.要使用<strong>BottomNavigationView</strong>，首先需要把<strong>support:design library</strong>添加進我們的<strong>Project</strong>中，在 File -&gt; Project Structure -&gt; Dependencles 下新增。<br><img src="bottom_navigation02.png" width="100%" height="100%" align="center/"></p>
+<p>2.接下來在<strong>layout</strong>裡，創建一個<strong>BottomNavigationView</strong>，背景顏色使用跟窗口背景顏色一樣</p>
+<p>layout:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;android.support.design.widget.BottomNavigationView</span><br><span class="line">       android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">       android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">       android:background=<span class="string">"?android:attr/windowBackground"</span>/&gt;</span><br></pre></td></tr></table></figure></p>
+<p>3.緊接著我們要創建<strong>BottomNavigationView</strong> 的 <strong>menu</strong>，在<strong>res -&gt; menu</strong>目錄下創建</p>
+<p>menu:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</span><br><span class="line">&lt;menu xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span>&gt;</span><br><span class="line">    &lt;item</span><br><span class="line">        android:title=<span class="string">"@string/recents"</span></span><br><span class="line">        android:id=<span class="string">"@+id/main_recents"</span></span><br><span class="line">        android:icon=<span class="string">"@drawable/ic_recents_white_24dp"</span></span><br><span class="line">        android:orderInCategory=<span class="string">"1"</span>/&gt;</span><br><span class="line">    &lt;item</span><br><span class="line">        android:title=<span class="string">"@string/favorites"</span></span><br><span class="line">        android:id=<span class="string">"@+id/main_favorites"</span></span><br><span class="line">        android:icon=<span class="string">"@drawable/ic_favorite_white_24dp"</span></span><br><span class="line">        android:orderInCategory=<span class="string">"2"</span>/&gt;</span><br><span class="line">    &lt;item</span><br><span class="line">        android:title=<span class="string">"@string/nearby"</span></span><br><span class="line">        android:id=<span class="string">"@+id/main_nearby"</span></span><br><span class="line">        android:icon=<span class="string">"@drawable/ic_near_by_white_24dp"</span></span><br><span class="line">        android:orderInCategory=<span class="string">"3"</span>/&gt;</span><br><span class="line">&lt;/menu&gt;</span><br></pre></td></tr></table></figure></p>
+<p>4.回到<strong>layout</strong>在<strong>BottomNavigationView</strong>的屬性中添加<strong>menu</strong></p>
+<p>layout:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;android.support.design.widget.BottomNavigationView</span><br><span class="line">       android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">       android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">       android:background=<span class="string">"?android:attr/windowBackground"</span></span><br><span class="line">       app:menu=<span class="string">"@menu/bottom_navigation_menu"</span>/&gt;</span><br></pre></td></tr></table></figure></p>
+<p>運行效果如下：<br><img src="bottom_navigation03.gif" width="50%" height="50%" align="center/"></p>
+<h2 id="Customize-the-Bottom-Navigation"><a href="#Customize-the-Bottom-Navigation" class="headerlink" title="Customize the Bottom Navigation"></a>Customize the Bottom Navigation</h2><p>接下來我們要改變<strong>BottomNavigationView</strong>被選中文字/圖示顏色，包含<strong>BottomNavigationView</strong>的背景。</p>
+<p><strong>BottomNavigationView</strong>預設選中的顏色是當前<strong>Theme</strong>中的<strong>color primary</strong>，也就是跟<strong>Toolbar</strong>顏色一至</p>
+<p>1.首先建立一個新<strong>style</strong>，並自定義<strong>color primary</strong>的顏色</p>
+<p>style:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;style name=<span class="string">"BottomNavigationTheme"</span> parent=<span class="string">"Widget.Design.BottomNavigationView"</span>&gt;</span><br><span class="line">    &lt;item name=<span class="string">"colorPrimary"</span>&gt;@color/colorBottomNavigation&lt;/item&gt;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure></p>
+<p>2.回到<strong>layout</strong>在<strong>BottomNavigationView</strong>的屬性中添加上剛剛創建的<strong>style</strong></p>
+<p>layout:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;android.support.design.widget.BottomNavigationView</span><br><span class="line">       android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">       android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">       android:background=<span class="string">"?android:attr/windowBackground"</span></span><br><span class="line">       app:menu=<span class="string">"@menu/bottom_navigation_menu"</span></span><br><span class="line">       app:theme=<span class="string">"@style/BottomNavigationTheme"</span>/&gt;</span><br></pre></td></tr></table></figure></p>
+<p>運行效果如下：<br><img src="bottom_navigation04.gif" width="50%" height="50%" align="center/"></p>
+<p>變更<strong>BottomNavigationView</strong>的背景圖案可以加入屬性：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app:itemBackground=<span class="string">"@color/colorCustomize"</span></span><br></pre></td></tr></table></figure></p>
+<p>變更<strong>BottomNavigationView</strong>的圖示顏色可以加入屬性：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app:itemIconTint=<span class="string">"@color/colorCustomize"</span></span><br></pre></td></tr></table></figure></p>
+<p>變更<strong>BottomNavigationView</strong>的文字顏色可以加入屬性：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app:itemTextColor=<span class="string">"@color/colorCustomize"</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="Add-an-On-click-Listener-to-the-Bottom-Navigation"><a href="#Add-an-On-click-Listener-to-the-Bottom-Navigation" class="headerlink" title="Add an On-click Listener to the Bottom Navigation"></a>Add an On-click Listener to the Bottom Navigation</h2><p>監聽<strong>BottomNavigationView</strong>的點擊事件，在代碼中呼叫<strong>setOnNavigationItemSelectedListener()</strong>方法</p>
+<p>java:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">bottomNavigationView.setOnNavigationItemSelectedListener(<span class="keyword">new</span> BottomNavigationView.OnNavigationItemSelectedListener() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onNavigationItemSelected</span><span class="params">(@NonNull MenuItem item)</span> </span>&#123;</span><br><span class="line">                </span><br><span class="line">         <span class="keyword">switch</span> (item.getItemId()) &#123;</span><br><span class="line">             <span class="keyword">case</span> R.id.main_recents: <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">             <span class="keyword">case</span> R.id.main_favorites: <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">             <span class="keyword">case</span> R.id.main_nearby: <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">         &#125;</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure></p>
+<p>運行效果如下：<br><img src="bottom_navigation05.gif" width="50%" height="50%" align="center/"></p>
+<p>參考資料：<br><a href="https://developer.android.com/reference/android/support/design/widget/BottomNavigationView.html" target="_blank" rel="noopener">Android BottomNavigationView</a><br><a href="https://material.io/guidelines/components/bottom-navigation.html#bottom-navigation-specs" target="_blank" rel="noopener">Material Design Bottom navigation</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Material-Design/" rel="tag"># Material Design</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/22/MaterialDesign-Android-Snackbar/" rel="next" title="[MaterialDesign] Android Snackbar">
+                <i class="fa fa-chevron-left"></i> [MaterialDesign] Android Snackbar
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/25/MaterialDesogn-Android-ViewPager/" rel="prev" title="[MaterialDesogn] Android ViewPager">
+                [MaterialDesogn] Android ViewPager <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Nick Chen" />
+            
+              <p class="site-author-name" itemprop="name">Nick Chen</p>
+              <p class="site-description motion-element" itemprop="description">Coding for fun</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">標籤</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-a-Bottom-Navigation"><span class="nav-number">2.</span> <span class="nav-text">Create a Bottom Navigation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Customize-the-Bottom-Navigation"><span class="nav-number">3.</span> <span class="nav-text">Customize the Bottom Navigation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Add-an-On-click-Listener-to-the-Bottom-Navigation"><span class="nav-number">4.</span> <span class="nav-text">Add an On-click Listener to the Bottom Navigation</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nick Chen</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.3</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 本站訪客數
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 本站總訪問量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://nickcode4fun.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://nickcode4fun.net/2018/01/23/MaterialDesign-Android-Bottom-Navigation/';
+          this.page.identifier = '2018/01/23/MaterialDesign-Android-Bottom-Navigation/';
+          this.page.title = '[MaterialDesign] Android Bottom Navigation';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://nickcode4fun.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,Material Design," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="IntroductionProgressBar是在Android常見的元件，尤其是在materials design上，依照 UI 上顯示的方式，可以初步分類成兩種">
+<meta name="keywords" content="Android,Material Design">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[MaterialDesign] Android Progress Bar">
+<meta property="og:url" content="http://nickcode4fun.net/2018/01/17/MaterialDesign-Android-Progress-Bar/index.html">
+<meta property="og:site_name" content="代碼玩家 Nick&#39;s Blog">
+<meta property="og:description" content="IntroductionProgressBar是在Android常見的元件，尤其是在materials design上，依照 UI 上顯示的方式，可以初步分類成兩種">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:image" content="http://nickcode4fun.net/2018/01/17/MaterialDesign-Android-Progress-Bar/progressbar01.gif">
+<meta property="og:image" content="http://nickcode4fun.net/2018/01/17/MaterialDesign-Android-Progress-Bar/progressbar02.gif">
+<meta property="og:image" content="http://nickcode4fun.net/2018/01/17/MaterialDesign-Android-Progress-Bar/progressbar03.gif">
+<meta property="og:image" content="http://nickcode4fun.net/2018/01/17/MaterialDesign-Android-Progress-Bar/progressbar04.png">
+<meta property="og:image" content="http://nickcode4fun.net/2018/01/17/MaterialDesign-Android-Progress-Bar/progressbar05.png">
+<meta property="og:updated_time" content="2018-10-25T03:28:50.356Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[MaterialDesign] Android Progress Bar">
+<meta name="twitter:description" content="IntroductionProgressBar是在Android常見的元件，尤其是在materials design上，依照 UI 上顯示的方式，可以初步分類成兩種">
+<meta name="twitter:image" content="http://nickcode4fun.net/2018/01/17/MaterialDesign-Android-Progress-Bar/progressbar01.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://nickcode4fun.net/2018/01/17/MaterialDesign-Android-Progress-Bar/"/>
+
+
+
+
+
+  <title>[MaterialDesign] Android Progress Bar | 代碼玩家 Nick's Blog</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-110158879-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">代碼玩家 Nick's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://nickcode4fun.net/2018/01/17/MaterialDesign-Android-Progress-Bar/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Nick Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="代碼玩家 Nick's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[MaterialDesign] Android Progress Bar</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-01-17T13:33:51+08:00">
+                2018-01-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/01/17/MaterialDesign-Android-Progress-Bar/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/01/17/MaterialDesign-Android-Progress-Bar/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 本文總閱讀量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p><strong>ProgressBar</strong>是在Android常見的元件，尤其是在<strong>materials design</strong>上，依照 UI 上顯示的方式，可以初步分類成兩種<a id="more"></a>：<br><strong>1.Linear長條形</strong><br><strong>2.Circular圓型</strong><br>接下來我們來看看如何使用。</p>
+<h2 id="Create-a-Circular-Progress-Bar"><a href="#Create-a-Circular-Progress-Bar" class="headerlink" title="Create a Circular Progress Bar"></a>Create a Circular Progress Bar</h2><p>在<strong>layout</strong>文件下，直接引用<strong>ProgressBar</strong></p>
+<p><strong>layout:</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;ProgressBar</span><br><span class="line">       android:id=<span class="string">"@+id/progress_id"</span></span><br><span class="line">       android:layout_width=<span class="string">"wrap_content"</span></span><br><span class="line">       android:layout_height=<span class="string">"wrap_content"</span>/&gt;</span><br></pre></td></tr></table></figure></p>
+<p>運行效果如下：<br><img src="progressbar01.gif" width="50%" height="50%" align="center/"></p>
+<p><strong>ProgressBar</strong>顏色預設是使用<strong>@color/colorAccent</strong>，想要改變顏色，需先創建一個新<strong>style</strong>，並自訂<strong>colorAccent</strong>的顏色</p>
+<p><strong>styles.xml:</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;resources&gt;</span><br><span class="line">   ...</span><br><span class="line">  &lt;style name=<span class="string">"ProgressTheme"</span> parent=<span class="string">"Widget.AppCompat.ProgressBar"</span>&gt;</span><br><span class="line">        &lt;item name=<span class="string">"colorAccent"</span>&gt;@color/colorDeepOrangeA200&lt;/item&gt;</span><br><span class="line">  &lt;/style&gt;</span><br><span class="line">&lt;/resources&gt;</span><br></pre></td></tr></table></figure></p>
+<p>接著在<strong>ProgressBar</strong>添加屬性<strong>android:theme</strong>為我們自定義的新<strong>style</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:theme=<span class="string">"@style/ProgressTheme"</span></span><br></pre></td></tr></table></figure></p>
+<p>運行效果如下：<br><img src="progressbar02.gif" width="50%" height="50%" align="center/"></p>
+<h2 id="Create-a-Linear-Progress-Bar"><a href="#Create-a-Linear-Progress-Bar" class="headerlink" title="Create a Linear Progress Bar"></a>Create a Linear Progress Bar</h2><p><strong>Linear Progress Bar</strong> 依照顯示的型態，又可細分成4項<br><strong>1.Determinate(定值)</strong><br>    -有定值，顯示在進度條上，需要定義當前值與最大值<br><strong>2.Indeterminate(不定值)</strong><br>    -無定值，UI顯示上會從進度條開始，快速到結束，重複循環<br><strong>3.Buffer(緩衝)</strong><br>    -影片或加載圖片很常用到的緩衝進度條，通常是顯示在確定值的後方<br><strong>4.Query Indeterminate and Determinate (混合)</strong><br>    -結合 Determinate 和 Indeterminate 的進度條</p>
+<p>創建一個<strong>Linear Progress Bar</strong>，方法很簡單，在剛剛創建的<strong>ProgressBar</strong>添加上一條<strong>style</strong>屬性，此時就會發現<strong>ProgressBar</strong>已經顯示為長條形<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">style=<span class="string">"@style/Widget.AppCompat.ProgressBar.Horizontal"</span></span><br></pre></td></tr></table></figure></p>
+<p>接著再加上一條屬性<strong>android:indeterminate</strong>，表示<strong>ProgressBar</strong>為不定值，會像<strong> Circular Progress Bar </strong> 一樣，有循環的效果<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:indeterminate=<span class="string">"true"</span></span><br></pre></td></tr></table></figure></p>
+<p>運行效果如下：<br><img src="progressbar03.gif" width="50%" height="50%" align="center/"></p>
+<p>接下來我們來創建 <strong><strong>Determinate(定值) ProgressBar</strong></strong></p>
+<p>先把屬性<strong>android:indeterminate</strong>，設為<strong>false</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:indeterminate=<span class="string">"false"</span></span><br></pre></td></tr></table></figure></p>
+<p>接著設定屬性進度值與最大值，Android會自動換算成百分比<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">android:progress=<span class="string">"20"</span></span><br><span class="line">android:max=<span class="string">"100"</span></span><br></pre></td></tr></table></figure></p>
+<p>當然也可以在代碼裡設定<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">progressBar.setProgress(<span class="number">20</span>);</span><br><span class="line">progressBar.setMax(<span class="number">100</span>);</span><br></pre></td></tr></table></figure></p>
+<p>運行效果如下：<br><img src="progressbar04.png" width="50%" height="50%" align="center/"></p>
+<p>使用<strong>Buffer(緩衝) ProgressBar</strong>，需在<strong>ProgressBar</strong>裡添加屬性 <strong>android:secondaryProgress</strong>，就可以在畫面上，看見一條緩衝進度條效果<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">android:secondaryProgress=<span class="string">"40"</span></span><br></pre></td></tr></table></figure></p>
+<p>當然也可以在代碼裡設定<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">progressBar.setSecondaryProgress(<span class="number">40</span>);</span><br></pre></td></tr></table></figure></p>
+<p>運行效果如下：<br><img src="progressbar05.png" width="50%" height="50%" align="center/"></p>
+<p>參考網站:<br><a href="https://developer.android.com/reference/android/widget/ProgressBar.html" target="_blank" rel="noopener">Android ProgressBar</a><br><a href="https://material.io/guidelines/components/progress-activity.html" target="_blank" rel="noopener">Material Design Progress &amp; activity</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Material-Design/" rel="tag"># Material Design</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/15/MaterialDesign-Android-Selection-Controls/" rel="next" title="[MaterialDesign] Android Selection Controls">
+                <i class="fa fa-chevron-left"></i> [MaterialDesign] Android Selection Controls
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/18/MaterialDesign-Android-Dialogs/" rel="prev" title="[MaterialDesign] Android Dialogs">
+                [MaterialDesign] Android Dialogs <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Nick Chen" />
+            
+              <p class="site-author-name" itemprop="name">Nick Chen</p>
+              <p class="site-description motion-element" itemprop="description">Coding for fun</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">標籤</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-a-Circular-Progress-Bar"><span class="nav-number">2.</span> <span class="nav-text">Create a Circular Progress Bar</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-a-Linear-Progress-Bar"><span class="nav-number">3.</span> <span class="nav-text">Create a Linear Progress Bar</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nick Chen</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.3</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 本站訪客數
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 本站總訪問量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://nickcode4fun.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://nickcode4fun.net/2018/01/17/MaterialDesign-Android-Progress-Bar/';
+          this.page.identifier = '2018/01/17/MaterialDesign-Android-Progress-Bar/';
+          this.page.title = '[MaterialDesign] Android Progress Bar';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://nickcode4fun.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

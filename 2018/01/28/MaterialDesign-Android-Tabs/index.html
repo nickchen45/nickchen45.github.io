@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android,Material Design," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Introduction在Material Design中，Tabs使用頁籤的方式管理不同的畫面，通常位於Toolbar的下方，常與Fragment/ViewPager搭配使用。">
+<meta name="keywords" content="Android,Material Design">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[MaterialDesign] Android Tabs">
+<meta property="og:url" content="http://nickcode4fun.net/2018/01/28/MaterialDesign-Android-Tabs/index.html">
+<meta property="og:site_name" content="代碼玩家 Nick&#39;s Blog">
+<meta property="og:description" content="Introduction在Material Design中，Tabs使用頁籤的方式管理不同的畫面，通常位於Toolbar的下方，常與Fragment/ViewPager搭配使用。">
+<meta property="og:locale" content="zh-tw">
+<meta property="og:image" content="http://nickcode4fun.net/2018/01/28/MaterialDesign-Android-Tabs/tabs01.png">
+<meta property="og:image" content="http://nickcode4fun.net/2018/01/28/MaterialDesign-Android-Tabs/tabs02.png">
+<meta property="og:image" content="http://nickcode4fun.net/2018/01/28/MaterialDesign-Android-Tabs/tabs03.png">
+<meta property="og:image" content="http://nickcode4fun.net/2018/01/28/MaterialDesign-Android-Tabs/tabs04.png">
+<meta property="og:image" content="http://nickcode4fun.net/2018/01/28/MaterialDesign-Android-Tabs/tabs05.png">
+<meta property="og:image" content="http://nickcode4fun.net/2018/01/28/MaterialDesign-Android-Tabs/tabs06.png">
+<meta property="og:image" content="http://nickcode4fun.net/2018/01/28/MaterialDesign-Android-Tabs/tabs07.gif">
+<meta property="og:image" content="http://nickcode4fun.net/2018/01/28/MaterialDesign-Android-Tabs/tabs08.gif">
+<meta property="og:image" content="http://nickcode4fun.net/2018/01/28/MaterialDesign-Android-Tabs/tabs09.gif">
+<meta property="og:image" content="http://nickcode4fun.net/2018/01/28/MaterialDesign-Android-Tabs/tabs16.png">
+<meta property="og:image" content="http://nickcode4fun.net/2018/01/28/MaterialDesign-Android-Tabs/tabs17.png">
+<meta property="og:image" content="http://nickcode4fun.net/2018/01/28/MaterialDesign-Android-Tabs/tabs10.png">
+<meta property="og:image" content="http://nickcode4fun.net/2018/01/28/MaterialDesign-Android-Tabs/tabs11.png">
+<meta property="og:image" content="http://nickcode4fun.net/2018/01/28/MaterialDesign-Android-Tabs/tabs18.gif">
+<meta property="og:image" content="http://nickcode4fun.net/2018/01/28/MaterialDesign-Android-Tabs/tabs12.png">
+<meta property="og:image" content="http://nickcode4fun.net/2018/01/28/MaterialDesign-Android-Tabs/tabs13.png">
+<meta property="og:image" content="http://nickcode4fun.net/2018/01/28/MaterialDesign-Android-Tabs/tabs14.gif">
+<meta property="og:image" content="http://nickcode4fun.net/2018/01/28/MaterialDesign-Android-Tabs/tabs15.gif">
+<meta property="og:updated_time" content="2018-10-25T03:28:50.390Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[MaterialDesign] Android Tabs">
+<meta name="twitter:description" content="Introduction在Material Design中，Tabs使用頁籤的方式管理不同的畫面，通常位於Toolbar的下方，常與Fragment/ViewPager搭配使用。">
+<meta name="twitter:image" content="http://nickcode4fun.net/2018/01/28/MaterialDesign-Android-Tabs/tabs01.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://nickcode4fun.net/2018/01/28/MaterialDesign-Android-Tabs/"/>
+
+
+
+
+
+  <title>[MaterialDesign] Android Tabs | 代碼玩家 Nick's Blog</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-110158879-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">代碼玩家 Nick's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://nickcode4fun.net/2018/01/28/MaterialDesign-Android-Tabs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Nick Chen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="代碼玩家 Nick's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[MaterialDesign] Android Tabs</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-01-28T22:39:48+08:00">
+                2018-01-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/01/28/MaterialDesign-Android-Tabs/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/01/28/MaterialDesign-Android-Tabs/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 本文總閱讀量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>在<strong>Material Design</strong>中，<strong>Tabs</strong>使用頁籤的方式管理不同的畫面，通常位於<strong>Toolbar的下方，</strong>常與<strong>Fragment/ViewPager</strong>搭配使用。<a id="more"></a>背景的顏色通常也與<strong>Toolbar</strong>一致<br><img src="tabs01.png" width="50%" height="50%" align="center/"></p>
+<p>在常見的使用中，<strong>Tabs</strong>可以被分為兩種模式<br><strong>1.Fixed</strong><br>在<strong>Fixed</strong>模式下，每個<strong>Tab item</strong>的大小都是一致的，也因為大小都一樣，所以在設計上通常放置兩個(含)以上，最多四個<strong>item</strong><br><strong>2.Scrollable</strong><br>在<strong>Scrollable</strong>模式下，<strong>Tab item</strong>常為4個以上</p>
+<p>在<strong>Tabs item</strong>設計上，不管是<strong>Fixed</strong>模式或是<strong>Scrollable</strong>模式，都可以用<strong>文字 / 圖案 / 文字+圖案</strong>下去設計，接下來我們來實際創建一個<strong>Tabs + ViewPager</strong></p>
+<h2 id="Create-a-Tab-Layout-with-Text-Fixed-Mode"><a href="#Create-a-Tab-Layout-with-Text-Fixed-Mode" class="headerlink" title="Create a Tab Layout with Text: Fixed Mode"></a>Create a Tab Layout with Text: Fixed Mode</h2><h3 id="添加support-design-library"><a href="#添加support-design-library" class="headerlink" title="添加support:design library"></a>添加support:design library</h3><p>使用<strong>TabLayout</strong>，首先需要把<strong>support:design library</strong>添加進我們的<strong>Project</strong>中，在 File -&gt; Project Structure -&gt; Dependencles 下新增。<br><img src="tabs02.png" width="100%" height="100%" align="center/"></p>
+<h3 id="創建TabLayout"><a href="#創建TabLayout" class="headerlink" title="創建TabLayout"></a>創建TabLayout</h3><p>在<strong>xml</strong>裡，創建一個<strong>TabLayout</strong>，賦予屬性<strong>app:tabMode=”fixed”</strong>，背景顏色使用跟<strong>Toolbar(colorPrimary)</strong>顏色一致，接著在下方創建<strong>ViewPager</strong></p>
+<p><strong>app:tabGravity=”fill”</strong>表示tabs item會填滿整個<strong>TabLayout</strong></p>
+<p>layout:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</span><br><span class="line">&lt;RelativeLayout xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">    android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">    xmlns:app=<span class="string">"http://schemas.android.com/apk/res-auto"</span>&gt;</span><br><span class="line"></span><br><span class="line">   &lt;android.support.v7.widget.Toolbar</span><br><span class="line">       android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">       android:layout_height=<span class="string">"?attr/actionBarSize"</span></span><br><span class="line">       android:id=<span class="string">"@+id/toolbar_id"</span></span><br><span class="line">       android:background=<span class="string">"@color/colorPrimary"</span></span><br><span class="line">       app:theme=<span class="string">"@style/ThemeOverlay.AppCompat.Dark.ActionBar"</span>/&gt;</span><br><span class="line"></span><br><span class="line">   &lt;android.support.design.widget.TabLayout</span><br><span class="line">       android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">       android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">       android:id=<span class="string">"@+id/tabLayout_id"</span></span><br><span class="line">       android:layout_below=<span class="string">"@+id/toolbar_id"</span></span><br><span class="line">       android:background=<span class="string">"@color/colorPrimary"</span></span><br><span class="line">       app:tabMode=<span class="string">"fixed"</span></span><br><span class="line">       app:tabGravity=<span class="string">"fill"</span>/&gt;</span><br><span class="line"></span><br><span class="line">   &lt;android.support.v4.view.ViewPager</span><br><span class="line">       android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">       android:layout_height=<span class="string">"match_parent"</span></span><br><span class="line">       android:id=<span class="string">"@+id/viewPager_id"</span></span><br><span class="line">       android:layout_below=<span class="string">"@+id/tabLayout_id"</span>/&gt;</span><br><span class="line"></span><br><span class="line">&lt;/RelativeLayout&gt;</span><br></pre></td></tr></table></figure></p>
+<p>預覽效果如下:<br><img src="tabs03.png" width="50%" height="50%" align="center/"></p>
+<h3 id="Define-layouts-for-the-items-in-TabLayout"><a href="#Define-layouts-for-the-items-in-TabLayout" class="headerlink" title="Define layouts for the items in TabLayout"></a>Define layouts for the items in TabLayout</h3><p>我們新增<strong>Fragment</strong>的<strong>layout</strong>，這些<strong>View</strong>，會顯示在<strong>ViewPager</strong>中，同時透過<strong>TabLayout</strong>的<strong>setupWithViewPager()</strong>方法，能夠自動產生對應<strong>ViewPager</strong>內<strong>view</strong>的<strong>tab item</strong>。</p>
+<p>新增<strong>Fragment layout</strong><br>layout:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</span><br><span class="line">&lt;RelativeLayout</span><br><span class="line">    xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">    android:layout_height=<span class="string">"match_parent"</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;android.support.v7.widget.AppCompatTextView</span><br><span class="line">        android:layout_width=<span class="string">"wrap_content"</span></span><br><span class="line">        android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">        android:layout_centerInParent=<span class="string">"true"</span></span><br><span class="line">        android:text=<span class="string">"@string/main_item_one"</span></span><br><span class="line">        android:textSize=<span class="string">"60sp"</span></span><br><span class="line">        android:textStyle=<span class="string">"bold"</span>/&gt;</span><br><span class="line"></span><br><span class="line">&lt;/RelativeLayout&gt;</span><br></pre></td></tr></table></figure></p>
+<p>預覽效果如下:<br><img src="tabs04.png" width="50%" height="50%" align="center/"></p>
+<p>接著依序創建<strong>layout_item_two</strong>與<strong>layout_item_three_layout</strong>，總共3個<strong>layout</strong><br><img src="tabs05.png" width="50%" height="50%" align="center/"></p>
+<h3 id="Create-Java-class-for-item-layout"><a href="#Create-Java-class-for-item-layout" class="headerlink" title="Create Java class for item layout"></a>Create Java class for item layout</h3><p>接下來創建<strong>Freagment class</strong></p>
+<p>java:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class OneFragment extends Fragment &#123;</span><br><span class="line"></span><br><span class="line">    private View view;</span><br><span class="line"></span><br><span class="line">    @Nullable</span><br><span class="line">    @Override</span><br><span class="line">    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) &#123;</span><br><span class="line">       view = inflater.inflate(R.layout.layout_item_one, container, <span class="literal">false</span>);</span><br><span class="line">       <span class="built_in">return</span> view;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>依序創建：<br><strong>layout_item_one</strong><br><strong>layout_item_two</strong><br><strong>layout_item_three</strong><br>的<strong>Fragment class</strong><br><img src="tabs06.png" width="50%" height="50%" align="center/"></p>
+<h3 id="Create-a-ViewPager-Adapter"><a href="#Create-a-ViewPager-Adapter" class="headerlink" title="Create a ViewPager Adapter"></a>Create a ViewPager Adapter</h3><p>接下來我們創建<strong>ViewPagerAdapter</strong>，並繼承<strong>FragmentPagerAdapter</strong></p>
+<p>java:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">public class ViewPagerAdapter extends FragmentPagerAdapter &#123;</span><br><span class="line"></span><br><span class="line">    private List&lt;Fragment&gt; fragmentList = new ArrayList&lt;&gt;();</span><br><span class="line">    private List&lt;String&gt; fragmentTitleList = new ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    public ViewPagerAdapter(FragmentManager fm) &#123;</span><br><span class="line">        super(fm);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Fragment getItem(int position) &#123;</span><br><span class="line">        // Fragment</span><br><span class="line">        <span class="built_in">return</span> fragmentList.get(position);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int <span class="function"><span class="title">getCount</span></span>() &#123;</span><br><span class="line">        <span class="built_in">return</span> fragmentList.size();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Nullable</span><br><span class="line">    @Override</span><br><span class="line">    public CharSequence getPageTitle(int position) &#123;</span><br><span class="line">        // 取得當前頁的title</span><br><span class="line">        <span class="built_in">return</span> fragmentTitleList.get(position);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 添加Fragment 與 Title 方法</span><br><span class="line">    public void addFragment(Fragment fragment, String title) &#123;</span><br><span class="line">        fragmentList.add(fragment);</span><br><span class="line">        fragmentTitleList.add(title);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Setting-TabLayout"><a href="#Setting-TabLayout" class="headerlink" title="Setting TabLayout"></a>Setting TabLayout</h3><p>在<strong>Adapter</strong>創建完成之後，回到<strong>Activity</strong>，把<strong>Fragment</strong>加進<strong>adapter</strong>，並把它與<strong>ViewPager</strong>綁定</p>
+<p>java:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());</span><br><span class="line"></span><br><span class="line">adapter.addFragment(new OneFragment(), <span class="string">"ITEM ONE"</span>);</span><br><span class="line">adapter.addFragment(new TwoFragment(), <span class="string">"ITEM TWO"</span>);</span><br><span class="line">adapter.addFragment(new ThreeFragment(), <span class="string">"ITEM THREE"</span>);</span><br><span class="line"></span><br><span class="line">viewPager.setAdapter(adapter);</span><br></pre></td></tr></table></figure></p>
+<p><strong>TabLayout</strong>有提供我們一個基於<strong>ViewPager</strong>快速創建對應<strong>Tabs</strong>的方法</p>
+<p>java:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tabLayout = findViewById(R.id.tabLayout_id);</span><br><span class="line"></span><br><span class="line">tabLayout.setupWithViewPager(viewPager);</span><br></pre></td></tr></table></figure></p>
+<p>運行效果如下：<br><img src="tabs07.gif" width="50%" height="50%" align="center/"></p>
+<p>改變<strong>Tab</strong>文字顏色，在<strong>TabLayout</strong>的<strong>tag</strong>裡，添加屬性<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app:tabTextColor=<span class="string">"@color/colorWhite"</span></span><br></pre></td></tr></table></figure></p>
+<p>運行效果如下：<br><img src="tabs08.gif" width="50%" height="50%" align="center/"></p>
+<p>改變<strong>Tab</strong>被選中的文字顏色，在<strong>TabLayout</strong>的<strong>tag</strong>裡，添加屬性<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app:tabSelectedTextColor=<span class="string">"@color/colorAccent"</span></span><br></pre></td></tr></table></figure></p>
+<p>運行效果如下：<br><img src="tabs09.gif" width="50%" height="50%" align="center/"></p>
+<p>改變<strong>TabLayout</strong>下方游標顏色，在<strong>TabLayout</strong>的<strong>tag</strong>裡，添加屬性<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app:tabIndicatorColor=<span class="string">"@color/colorLightBlue"</span></span><br></pre></td></tr></table></figure></p>
+<p>運行效果如下：<br><img src="tabs16.png" width="50%" height="50%" align="center/"></p>
+<p>改變<strong>TabLayout</strong>下方游標高度，在<strong>TabLayout</strong>的<strong>tag</strong>裡，添加屬性<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app:tabIndicatorHeight=<span class="string">"10dp"</span></span><br></pre></td></tr></table></figure></p>
+<p>運行效果如下：<br><img src="tabs17.png" width="50%" height="50%" align="center/"></p>
+<h2 id="Create-a-Tab-Layout-with-Text-Scrollable-Mode"><a href="#Create-a-Tab-Layout-with-Text-Scrollable-Mode" class="headerlink" title="Create a Tab Layout with Text: Scrollable Mode"></a>Create a Tab Layout with Text: Scrollable Mode</h2><p>要創建可滑動的<strong>TabLayout</strong>，首先把屬性<strong>app:tabMode</strong>改為<strong>scrollable</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app:tabMode=<span class="string">"scrollable"</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;android.support.design.widget.TabLayout</span><br><span class="line">      android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">      android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">      android:id=<span class="string">"@+id/tabLayout_id"</span></span><br><span class="line">      android:layout_below=<span class="string">"@+id/toolbar_id"</span></span><br><span class="line">      android:background=<span class="string">"@color/colorPrimary"</span></span><br><span class="line">      app:tabMode=<span class="string">"scrollable"</span></span><br><span class="line">      app:tabGravity=<span class="string">"fill"</span></span><br><span class="line">      app:tabTextColor=<span class="string">"@android:color/white"</span></span><br><span class="line">      app:tabSelectedTextColor=<span class="string">"@color/colorAccent"</span>/&gt;</span><br></pre></td></tr></table></figure>
+<p>接著創建十個<strong>layout</strong><br><img src="tabs10.png" width="50%" height="50%" align="center/"></p>
+<p>創建十個<strong>Java Class</strong><br><img src="tabs11.png" width="50%" height="50%" align="center/"></p>
+<p>在<strong>Activity</strong>裡添加<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ViewPagerAdapter adapter = <span class="keyword">new</span> ViewPagerAdapter(getSupportFragmentManager());</span><br><span class="line">adapter.addFragment(<span class="keyword">new</span> OneFragment(), <span class="string">"ITEM ONE"</span>);</span><br><span class="line">adapter.addFragment(<span class="keyword">new</span> TwoFragment(), <span class="string">"ITEM TWO"</span>);</span><br><span class="line">adapter.addFragment(<span class="keyword">new</span> ThreeFragment(), <span class="string">"ITEM THREE"</span>);</span><br><span class="line">adapter.addFragment(<span class="keyword">new</span> FourFragment(), <span class="string">"ITEM FOUR"</span>);</span><br><span class="line">adapter.addFragment(<span class="keyword">new</span> FiveFragment(), <span class="string">"ITEM FIVE"</span>);</span><br><span class="line">adapter.addFragment(<span class="keyword">new</span> SixFragment(), <span class="string">"ITEM SIX"</span>);</span><br><span class="line">adapter.addFragment(<span class="keyword">new</span> SevenFragment(), <span class="string">"ITEM SEVEN"</span>);</span><br><span class="line">adapter.addFragment(<span class="keyword">new</span> EightFragment(), <span class="string">"ITEM EIGHT"</span>);</span><br><span class="line">adapter.addFragment(<span class="keyword">new</span> NineFragment(), <span class="string">"ITEM NINE"</span>);</span><br><span class="line">adapter.addFragment(<span class="keyword">new</span> TenFragment(), <span class="string">"ITEM TEN"</span>);</span><br><span class="line">viewPager.setAdapter(adapter);</span><br><span class="line"></span><br><span class="line">tabLayout.setupWithViewPager(viewPager);</span><br></pre></td></tr></table></figure></p>
+<p>運行效果如下：<br><img src="tabs18.gif" width="50%" height="50%" align="center/"></p>
+<h2 id="Create-a-Tab-Layout-with-Icon"><a href="#Create-a-Tab-Layout-with-Icon" class="headerlink" title="Create a Tab Layout with Icon"></a>Create a Tab Layout with Icon</h2><p>接下來我們以<strong>Fixed Mode</strong>實現，在<strong>TabLayout</strong>頁籤裡，只顯示<strong>icon</strong>的效果</p>
+<p>首先在<strong>XML</strong>裡，把<strong>app:tabMode</strong>設為<strong>“fixed”</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;android.support.design.widget.TabLayout</span><br><span class="line">       android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">       android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">       android:id=<span class="string">"@+id/tabLayout_id"</span></span><br><span class="line">       android:layout_below=<span class="string">"@+id/toolbar_id"</span></span><br><span class="line">       android:background=<span class="string">"@color/colorPrimary"</span></span><br><span class="line">       app:tabMode=<span class="string">"fixed"</span></span><br><span class="line">       app:tabGravity=<span class="string">"fill"</span></span><br><span class="line">       app:tabTextColor=<span class="string">"@android:color/white"</span></span><br><span class="line">       app:tabSelectedTextColor=<span class="string">"@color/colorAccent"</span>/&gt;</span><br></pre></td></tr></table></figure></p>
+<p>接著同樣新增3個<strong>Layout</strong>，<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span>?&gt;</span><br><span class="line">&lt;RelativeLayout xmlns:android=<span class="string">"http://schemas.android.com/apk/res/android"</span></span><br><span class="line">    android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">    android:layout_height=<span class="string">"match_parent"</span>&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;TextView</span><br><span class="line">        android:layout_width=<span class="string">"wrap_content"</span></span><br><span class="line">        android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">        android:text=<span class="string">"@string/recents"</span></span><br><span class="line">        android:layout_centerHorizontal=<span class="string">"true"</span></span><br><span class="line">        android:layout_centerVertical=<span class="string">"true"</span></span><br><span class="line">        android:textSize=<span class="string">"40sp"</span></span><br><span class="line">        android:textStyle=<span class="string">"bold"</span>/&gt;</span><br><span class="line">    </span><br><span class="line">&lt;/RelativeLayout&gt;</span><br></pre></td></tr></table></figure></p>
+<p><img src="tabs12.png" width="70%" height="70%" align="center/"></p>
+<p>創建剛剛新增<strong>layout</strong>的<strong>java class(Fragment)</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RecentsFragment</span> <span class="keyword">extends</span> <span class="title">Fragment</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    View view;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RecentsFragment</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Nullable</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> View <span class="title">onCreateView</span><span class="params">(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        view = inflater.inflate(R.layout.recents_layout,container,<span class="keyword">false</span>);</span><br><span class="line">        <span class="keyword">return</span> view;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="tabs13.png" width="70%" height="70%" align="center/"></p>
+<p>創建<strong>ViewPagerAdapter</strong>，這邊我們沒有覆寫<strong>getPageTitle()</strong>方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ViewPagerAdapter</span> <span class="keyword">extends</span> <span class="title">FragmentPagerAdapter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> List&lt;Fragment&gt; fragmentList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    <span class="keyword">private</span> List&lt;String&gt; fragmentTitleList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ViewPagerAdapter</span><span class="params">(FragmentManager fm)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(fm);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Fragment <span class="title">getItem</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// Fragment</span></span><br><span class="line">        <span class="keyword">return</span> fragmentList.get(position);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> fragmentList.size();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 添加Fragment 與 Title 方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addFragment</span><span class="params">(Fragment fragment, String title)</span> </span>&#123;</span><br><span class="line">        fragmentList.add(fragment);</span><br><span class="line">        fragmentTitleList.add(title);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在<strong>Activity</strong>裡初始化，在綁定<strong>Adapter</strong>後，使用<strong>getTabAt()</strong>取得各項<strong>Tab</strong>後，設定各個<strong>icon</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    Toolbar toolbar;</span><br><span class="line">    TabLayout tabLayout;</span><br><span class="line">    ViewPager viewPager;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        toolbar = findViewById(R.id.toolbar_id);</span><br><span class="line">        setSupportActionBar(toolbar);</span><br><span class="line"></span><br><span class="line">        viewPager = findViewById(R.id.viewPager_id);</span><br><span class="line">        ViewPagerAdapter adapter = <span class="keyword">new</span> ViewPagerAdapter(getSupportFragmentManager());</span><br><span class="line">        adapter.addFragment(<span class="keyword">new</span> RecentsFragment(),<span class="string">"RECENTS"</span>);</span><br><span class="line">        adapter.addFragment(<span class="keyword">new</span> FavoritesFragment(),<span class="string">"FAVORITES"</span>);</span><br><span class="line">        adapter.addFragment(<span class="keyword">new</span> NearbyFragment(),<span class="string">"NEARBY"</span>);</span><br><span class="line">        viewPager.setAdapter(adapter);</span><br><span class="line"></span><br><span class="line">        tabLayout = findViewById(R.id.tabLayout_id);</span><br><span class="line">        tabLayout.setupWithViewPager(viewPager);</span><br><span class="line">        <span class="comment">// 添加icon</span></span><br><span class="line">        tabLayout.getTabAt(<span class="number">0</span>).setIcon(R.drawable.phone);</span><br><span class="line">        tabLayout.getTabAt(<span class="number">1</span>).setIcon(R.drawable.heart);</span><br><span class="line">        tabLayout.getTabAt(<span class="number">2</span>).setIcon(R.drawable.account);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>運行效果如下：<br><img src="tabs14.gif" width="50%" height="50%" align="center/"></p>
+<h2 id="Create-a-Tab-Layout-with-Icon-and-Text"><a href="#Create-a-Tab-Layout-with-Icon-and-Text" class="headerlink" title="Create a Tab Layout with Icon and Text"></a>Create a Tab Layout with Icon and Text</h2><p>如果想要<strong>Tabs</strong>同時擁有<strong>圖片</strong>和<strong>文字</strong>，只要在<strong>ViewPageAdapter</strong>裡，覆寫<strong>getPageTitle()</strong>方法就行了。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ViewPagerAdapter</span> <span class="keyword">extends</span> <span class="title">FragmentPagerAdapter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> List&lt;Fragment&gt; fragmentList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    <span class="keyword">private</span> List&lt;String&gt; fragmentTitleList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ViewPagerAdapter</span><span class="params">(FragmentManager fm)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(fm);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Fragment <span class="title">getItem</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// Fragment</span></span><br><span class="line">        <span class="keyword">return</span> fragmentList.get(position);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getCount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> fragmentList.size();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Nullable</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> CharSequence <span class="title">getPageTitle</span><span class="params">(<span class="keyword">int</span> position)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 取得當前頁的title</span></span><br><span class="line">        <span class="keyword">return</span> fragmentTitleList.get(position);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 添加Fragment 與 Title 方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addFragment</span><span class="params">(Fragment fragment, String title)</span> </span>&#123;</span><br><span class="line">        fragmentList.add(fragment);</span><br><span class="line">        fragmentTitleList.add(title);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>運行效果如下：<br><img src="tabs15.gif" width="50%" height="50%" align="center/"></p>
+<h2 id="Create-a-Tabs-item-with-Java"><a href="#Create-a-Tabs-item-with-Java" class="headerlink" title="Create a Tabs item with Java"></a>Create a Tabs item with Java</h2><p>不使用<strong>ViewPager</strong>，也可以透過代碼創建<strong>TabsItem</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tabLayout = findViewById(R.id.tabLayout_id);</span><br><span class="line"></span><br><span class="line">tabLayout.addTab(tabLayout.newTab().setText(<span class="string">"RECENTS"</span>).setIcon(R.drawable.phone));</span><br><span class="line">tabLayout.addTab(tabLayout.newTab().setText(<span class="string">"FAVORITES"</span>).setIcon(R.drawable.heart));</span><br><span class="line">tabLayout.addTab(tabLayout.newTab().setText(<span class="string">"NEARBY"</span>).setIcon(R.drawable.account));</span><br></pre></td></tr></table></figure></p>
+<h2 id="Create-a-Tabs-item-in-XML"><a href="#Create-a-Tabs-item-in-XML" class="headerlink" title="Create a Tabs item in XML"></a>Create a Tabs item in XML</h2><p>不使用<strong>ViewPager</strong>，在<strong>Layout.xml</strong>裡，創建<strong>TabItem</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;android.support.design.widget.TabLayout</span><br><span class="line">       android:layout_width=<span class="string">"match_parent"</span></span><br><span class="line">       android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">       android:id=<span class="string">"@+id/tabLayout_id"</span></span><br><span class="line">       android:layout_below=<span class="string">"@+id/toolbar_id"</span></span><br><span class="line">       android:background=<span class="string">"@color/colorPrimary"</span></span><br><span class="line">       app:tabMode=<span class="string">"fixed"</span></span><br><span class="line">       app:tabGravity=<span class="string">"fill"</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;android.support.design.widget.TabItem</span><br><span class="line">        android:layout_width=<span class="string">"wrap_content"</span></span><br><span class="line">        android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">        android:text=<span class="string">"@string/recents"</span></span><br><span class="line">        android:icon=<span class="string">"@drawable/phone"</span>/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;android.support.design.widget.TabItem</span><br><span class="line">        android:layout_width=<span class="string">"wrap_content"</span></span><br><span class="line">        android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">        android:text=<span class="string">"@string/favorites"</span></span><br><span class="line">        android:icon=<span class="string">"@drawable/heart"</span>/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;android.support.design.widget.TabItem</span><br><span class="line">        android:layout_width=<span class="string">"wrap_content"</span></span><br><span class="line">        android:layout_height=<span class="string">"wrap_content"</span></span><br><span class="line">        android:text=<span class="string">"@string/nearby"</span></span><br><span class="line">        android:icon=<span class="string">"@drawable/account"</span>/&gt;</span><br><span class="line"></span><br><span class="line">&lt;/android.support.design.widget.TabLayout&gt;</span><br></pre></td></tr></table></figure></p>
+<p>參考資料：<br><a href="https://developer.android.com/reference/android/support/design/widget/TabLayout.html" target="_blank" rel="noopener">Android TabLayout</a><br><a href="https://material.io/guidelines/components/tabs.html" target="_blank" rel="noopener">Material Design</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Material-Design/" rel="tag"># Material Design</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/25/MaterialDesogn-Android-ViewPager/" rel="next" title="[MaterialDesogn] Android ViewPager">
+                <i class="fa fa-chevron-left"></i> [MaterialDesogn] Android ViewPager
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/05/MaterialDesign-Android-CoordinatorLayout/" rel="prev" title="[MaterialDesign] Android CoordinatorLayout">
+                [MaterialDesign] Android CoordinatorLayout <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="Nick Chen" />
+            
+              <p class="site-author-name" itemprop="name">Nick Chen</p>
+              <p class="site-description motion-element" itemprop="description">Coding for fun</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">標籤</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-a-Tab-Layout-with-Text-Fixed-Mode"><span class="nav-number">2.</span> <span class="nav-text">Create a Tab Layout with Text: Fixed Mode</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加support-design-library"><span class="nav-number">2.1.</span> <span class="nav-text">添加support:design library</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#創建TabLayout"><span class="nav-number">2.2.</span> <span class="nav-text">創建TabLayout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Define-layouts-for-the-items-in-TabLayout"><span class="nav-number">2.3.</span> <span class="nav-text">Define layouts for the items in TabLayout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-Java-class-for-item-layout"><span class="nav-number">2.4.</span> <span class="nav-text">Create Java class for item layout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-ViewPager-Adapter"><span class="nav-number">2.5.</span> <span class="nav-text">Create a ViewPager Adapter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Setting-TabLayout"><span class="nav-number">2.6.</span> <span class="nav-text">Setting TabLayout</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-a-Tab-Layout-with-Text-Scrollable-Mode"><span class="nav-number">3.</span> <span class="nav-text">Create a Tab Layout with Text: Scrollable Mode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-a-Tab-Layout-with-Icon"><span class="nav-number">4.</span> <span class="nav-text">Create a Tab Layout with Icon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-a-Tab-Layout-with-Icon-and-Text"><span class="nav-number">5.</span> <span class="nav-text">Create a Tab Layout with Icon and Text</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-a-Tabs-item-with-Java"><span class="nav-number">6.</span> <span class="nav-text">Create a Tabs item with Java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-a-Tabs-item-in-XML"><span class="nav-number">7.</span> <span class="nav-text">Create a Tabs item in XML</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Nick Chen</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 強力驅動</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主題 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.3</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 本站訪客數
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 本站總訪問量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://nickcode4fun.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://nickcode4fun.net/2018/01/28/MaterialDesign-Android-Tabs/';
+          this.page.identifier = '2018/01/28/MaterialDesign-Android-Tabs/';
+          this.page.title = '[MaterialDesign] Android Tabs';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://nickcode4fun.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
