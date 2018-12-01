@@ -79,18 +79,20 @@
 
 
 
-<meta name="description" content="Build Environment1.首先為了確保能啟用Data Binding，必須先使用Android SDK manager 下載最新的 Support repository。">
+<meta name="description" content="Intrdoction本篇文章來介紹，如何在Android上，簡單實現高斯模糊（Gaussian blur)效果。又稱毛玻璃效果或磨砂效果。透果使用Google提供的RenderScriptApi，一個強大的圖片處理框架，幫助Android開法者專注於圖片處理算法的邏輯，而不是處理圖像複雜的計算。">
 <meta name="keywords" content="Android">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[Android] DataBinding&#x2F;UnitTest，在Gradle中相應的配置">
-<meta property="og:url" content="http://nickcode4fun.net/2017/10/30/Android-DataBinding:UnitTest，在Gradle中相應的配置/index.html">
+<meta property="og:title" content="[Android] Gaussian blur Effect">
+<meta property="og:url" content="http://nickcode4fun.net/2018/12/01/Android-Gaussian-blur-Effect/index.html">
 <meta property="og:site_name" content="代碼玩家 Nick&#39;s Blog">
-<meta property="og:description" content="Build Environment1.首先為了確保能啟用Data Binding，必須先使用Android SDK manager 下載最新的 Support repository。">
+<meta property="og:description" content="Intrdoction本篇文章來介紹，如何在Android上，簡單實現高斯模糊（Gaussian blur)效果。又稱毛玻璃效果或磨砂效果。透果使用Google提供的RenderScriptApi，一個強大的圖片處理框架，幫助Android開法者專注於圖片處理算法的邏輯，而不是處理圖像複雜的計算。">
 <meta property="og:locale" content="zh-tw">
-<meta property="og:updated_time" content="2018-10-25T03:28:50.255Z">
+<meta property="og:image" content="http://nickcode4fun.net/2018/12/01/Android-Gaussian-blur-Effect/gaussian_blur_effect01.gif">
+<meta property="og:updated_time" content="2018-12-01T09:59:05.182Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[Android] DataBinding&#x2F;UnitTest，在Gradle中相應的配置">
-<meta name="twitter:description" content="Build Environment1.首先為了確保能啟用Data Binding，必須先使用Android SDK manager 下載最新的 Support repository。">
+<meta name="twitter:title" content="[Android] Gaussian blur Effect">
+<meta name="twitter:description" content="Intrdoction本篇文章來介紹，如何在Android上，簡單實現高斯模糊（Gaussian blur)效果。又稱毛玻璃效果或磨砂效果。透果使用Google提供的RenderScriptApi，一個強大的圖片處理框架，幫助Android開法者專注於圖片處理算法的邏輯，而不是處理圖像複雜的計算。">
+<meta name="twitter:image" content="http://nickcode4fun.net/2018/12/01/Android-Gaussian-blur-Effect/gaussian_blur_effect01.gif">
 
 
 
@@ -120,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://nickcode4fun.net/2017/10/30/Android-DataBinding:UnitTest，在Gradle中相應的配置/"/>
+  <link rel="canonical" href="http://nickcode4fun.net/2018/12/01/Android-Gaussian-blur-Effect/"/>
 
 
 
 
 
-  <title>[Android] DataBinding/UnitTest，在Gradle中相應的配置 | 代碼玩家 Nick's Blog</title>
+  <title>[Android] Gaussian blur Effect | 代碼玩家 Nick's Blog</title>
   
 
 
@@ -242,7 +244,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://nickcode4fun.net/2017/10/30/Android-DataBinding:UnitTest，在Gradle中相應的配置/">
+    <link itemprop="mainEntityOfPage" href="http://nickcode4fun.net/2018/12/01/Android-Gaussian-blur-Effect/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Nick Chen">
@@ -259,7 +261,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">[Android] DataBinding/UnitTest，在Gradle中相應的配置</h1>
+          <h1 class="post-title" itemprop="name headline">[Android] Gaussian blur Effect</h1>
         
 
         <div class="post-meta">
@@ -271,8 +273,8 @@
               
                 <span class="post-meta-item-text">發表於</span>
               
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-10-30T22:12:36+08:00">
-                2017-10-30
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2018-12-01T16:50:50+08:00">
+                2018-12-01
               </time>
             
 
@@ -290,9 +292,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/10/30/Android-DataBinding:UnitTest，在Gradle中相應的配置/#comments" itemprop="discussionUrl">
+                <a href="/2018/12/01/Android-Gaussian-blur-Effect/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/10/30/Android-DataBinding:UnitTest，在Gradle中相應的配置/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/12/01/Android-Gaussian-blur-Effect/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -325,13 +327,15 @@
       
 
       
-        <h2 id="Build-Environment"><a href="#Build-Environment" class="headerlink" title="Build Environment"></a>Build Environment</h2><p>1.首先為了確保能啟用Data Binding，必須先使用Android SDK manager 下載最新的 Support repository。<br><a id="more"></a><br>2.接下來在你的 module 中，找到檔案 build.gradle，並添加以下代碼</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    ....</span><br><span class="line">    dataBinding &#123;</span><br><span class="line">        enabled = <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>3.如果你是同時使用 Kotlin 與 DataBinding 的話，可能會出現以下異常 :</p>
-<h4 id="Unresolved-reference-databinding"><a href="#Unresolved-reference-databinding" class="headerlink" title="Unresolved reference: databinding"></a>Unresolved reference: databinding</h4><p>解決辦法: 在 build.gradle 中，添加以下代碼</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">    ....</span><br><span class="line">    kapt <span class="string">'com.android.databinding:compiler:3.0.0'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">kapt &#123; //舊處理代碼</span><br><span class="line">    generateStubs = <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="新解決辦法：刪除舊註解的代碼，在-build-gradle-中，添加以下代碼"><a href="#新解決辦法：刪除舊註解的代碼，在-build-gradle-中，添加以下代碼" class="headerlink" title="新解決辦法：刪除舊註解的代碼，在 build.gradle 中，添加以下代碼"></a>新解決辦法：刪除舊註解的代碼，在 build.gradle 中，添加以下代碼</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: <span class="string">'kotlin-kapt'</span></span><br><span class="line">....</span><br><span class="line">dependencies &#123;</span><br><span class="line">    ....</span><br><span class="line">    kapt <span class="string">'com.android.databinding:compiler:3.0.0'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>參考網站：<br><a href="https://developer.android.com/topic/libraries/data-binding/index.html#build_environment" target="_blank" rel="noopener">Android DataBinding</a><br><a href="https://blog.jetbrains.com/kotlin/2016/09/kotlin-1-0-4-is-here/#sthash.y5NtHdYW.dpuf" target="_blank" rel="noopener">Kotlin Blog</a></p>
+        <h2 id="Intrdoction"><a href="#Intrdoction" class="headerlink" title="Intrdoction"></a>Intrdoction</h2><p>本篇文章來介紹，如何在<code>Android</code>上，簡單實現高斯模糊（Gaussian blur)效果。又稱毛玻璃效果或磨砂效果。透果使用<code>Google</code>提供的<code>RenderScript</code>Api，一個強大的圖片處理框架，幫助<code>Android</code>開法者專注於圖片處理算法的邏輯，而不是處理圖像複雜的計算。<a id="more"></a></p>
+<h2 id="RenderScript"><a href="#RenderScript" class="headerlink" title="RenderScript"></a>RenderScript</h2><p><code>RenderScript</code>根據<code>Android</code>官方網站的介紹，在計算的效率上，能充分利用GPU，CPU的計算能力，所以在編寫代碼的時候，毋須擔心具體硬件的不同，都能寫出具高效率的代碼。此篇文章實現的<code>Gaussian blur</code>效果，只是使用到了<code>RenderScript</code>其中一個操作類<code>ScriptIntrinsicBlur</code>，<code>RenderScript</code>Api的強大遠不及此，更詳情可以參考 <a href="https://developer.android.com/guide/topics/renderscript/compute" target="_blank" rel="noopener">Android 官網 RenderScript介紹</a></p>
+<h3 id="添加Api依賴庫"><a href="#添加Api依賴庫" class="headerlink" title="添加Api依賴庫"></a>添加Api依賴庫</h3><p>添加此依賴庫也很簡單，只要在<code>app/build.gradle</code>文件，在<code>android/defaultConfig</code>配置中添加兩行代碼：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">	...</span><br><span class="line">   defaultConfig &#123;</span><br><span class="line">    ...</span><br><span class="line">      renderscriptTargetApi 18</span><br><span class="line">      renderscriptSupportModeEnabled true</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代碼實現起來也很簡單，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Bitmap <span class="title">blurBitmap</span><span class="params">(Bitmap bitmap)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//Let's create an empty bitmap with the same size of the bitmap we want to blur</span></span><br><span class="line">        Bitmap outBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//Instantiate a new Renderscript</span></span><br><span class="line">        RenderScript rs = RenderScript.create(getApplicationContext());</span><br><span class="line"></span><br><span class="line">        <span class="comment">//Create an Intrinsic Blur Script using the Renderscript</span></span><br><span class="line">        ScriptIntrinsicBlur blurScript = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));</span><br><span class="line"></span><br><span class="line">        <span class="comment">//Create the Allocations (in/out) with the Renderscript and the in/out bitmaps</span></span><br><span class="line">        Allocation allIn = Allocation.createFromBitmap(rs, bitmap);</span><br><span class="line">        Allocation allOut = Allocation.createFromBitmap(rs, outBitmap);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//Set the radius of the blur: 0 &lt; radius &lt;= 25</span></span><br><span class="line">        blurScript.setRadius(<span class="number">25.0f</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//Perform the Renderscript</span></span><br><span class="line">        blurScript.setInput(allIn);</span><br><span class="line">        blurScript.forEach(allOut);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//Copy the final bitmap created by the out Allocation to the outBitmap</span></span><br><span class="line">        allOut.copyTo(outBitmap);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//recycle the original bitmap</span></span><br><span class="line">        bitmap.recycle();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//After finishing everything, we destroy the Renderscript.</span></span><br><span class="line">        rs.destroy();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> outBitmap;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>透過設置模糊半徑<code>radius</code>大小來控制圖片的清晰度。<br><br><br>這邊值得注意的是<code>ScriptIntrinsicBlur</code>只支援API17以上版本，為了兼容舊版，Google提供了<code>android.support.v8.renderscript</code>兼容包，使用時只要引入該兼容包下相關的類別即可。<br><br><br><br><br>效果如下:<br><br><br><br><br><img src="gaussian_blur_effect01.gif" width="50%" height="50%" align="center/"></p>
+<p><br><br><br><br><br><br><br><br><br><br><br><br><br></p>
+<p>參考資料：<br><br><br><a href="https://developer.android.com/guide/topics/renderscript/compute" target="_blank" rel="noopener">Android RenderScript</a><br><br><br><a href="https://zh.wikipedia.org/wiki/Renderscript" target="_blank" rel="noopener">維基百科介紹 Renderscript</a><br><br><br><a href="https://blog.csdn.net/huachao1001/article/details/51524502" target="_blank" rel="noopener">CSDN-huachao1001部落格</a><br><br></p>
 
       
     </div>
@@ -362,8 +366,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/21/Android-Job scheduler/" rel="next" title="[Android] Job scheduler">
-                <i class="fa fa-chevron-left"></i> [Android] Job scheduler
+              <a href="/2018/11/16/Android-Bottom-Sheets/" rel="next" title="[Android] Bottom Sheets">
+                <i class="fa fa-chevron-left"></i> [Android] Bottom Sheets
               </a>
             
           </div>
@@ -371,10 +375,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/11/19/MaterialDesign-Android-Toolbar(一)-Create-Toolbar/" rel="prev" title="[Material Design] Android Toolbar(一)">
-                [Material Design] Android Toolbar(一) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -511,7 +511,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Build-Environment"><span class="nav-number">1.</span> <span class="nav-text">Build Environment</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Unresolved-reference-databinding"><span class="nav-number">1.0.1.</span> <span class="nav-text">Unresolved reference: databinding</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#新解決辦法：刪除舊註解的代碼，在-build-gradle-中，添加以下代碼"><span class="nav-number">1.0.2.</span> <span class="nav-text">新解決辦法：刪除舊註解的代碼，在 build.gradle 中，添加以下代碼</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intrdoction"><span class="nav-number">1.</span> <span class="nav-text">Intrdoction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RenderScript"><span class="nav-number">2.</span> <span class="nav-text">RenderScript</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加Api依賴庫"><span class="nav-number">2.1.</span> <span class="nav-text">添加Api依賴庫</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -701,9 +701,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://nickcode4fun.net/2017/10/30/Android-DataBinding:UnitTest，在Gradle中相應的配置/';
-          this.page.identifier = '2017/10/30/Android-DataBinding:UnitTest，在Gradle中相應的配置/';
-          this.page.title = '[Android] DataBinding/UnitTest，在Gradle中相應的配置';
+          this.page.url = 'http://nickcode4fun.net/2018/12/01/Android-Gaussian-blur-Effect/';
+          this.page.identifier = '2018/12/01/Android-Gaussian-blur-Effect/';
+          this.page.title = '[Android] Gaussian blur Effect';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://nickcode4fun.disqus.com/embed.js';
